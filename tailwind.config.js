@@ -20,6 +20,7 @@ export default {
         desert: "#D5C388",
         background: "#F9F7F1",
         gray: "#8E8E8E",
+        lightGray: "#CACACA",
         black: "#1F1F1F",
         white: "#FFFFFF",
         error: "#F11212",

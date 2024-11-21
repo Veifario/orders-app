@@ -1,10 +1,16 @@
-import Home from "./pages/Home/Home";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+import { router } from "./routes/router";
+import { store } from "./store/store";
 
 function App() {
   return (
-    <div className="h-screen w-full bg-background pt-5">
-      <Home />
-    </div>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </Provider>
   );
 }
 
