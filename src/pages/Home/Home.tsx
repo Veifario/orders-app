@@ -2,7 +2,7 @@ import { homeStatisticBlocks } from "./home.config";
 
 const Home = () => {
   return (
-    <div className="container grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2">
       {homeStatisticBlocks.map((el, index) => (
         <div key={index} className="rounded-xl bg-white p-[10px]">
           <div className="flex items-center gap-[13px]">

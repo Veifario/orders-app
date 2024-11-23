@@ -16,18 +16,30 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        handle: {
+          crumb: "Главная",
+        },
       },
       {
         path: "/clients",
         element: <Clients />,
+        handle: {
+          crumb: "Список клиентов",
+        },
       },
       {
         path: "/history",
         element: <History />,
+        handle: {
+          crumb: "История заказов",
+        },
       },
       {
         path: "/add",
         element: <AddOrder />,
+        handle: {
+          crumb: "Создание предзаказа",
+        },
       },
     ],
   },
