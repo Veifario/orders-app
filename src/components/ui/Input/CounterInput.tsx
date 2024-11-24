@@ -1,21 +1,29 @@
 import { Minus, Plus } from "lucide-react";
-import { InputHTMLAttributes, useRef } from "react";
+import { ChangeEvent, InputHTMLAttributes, useRef } from "react";
 
-interface ICounterProps
+interface ICounterInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   label?: string;
   value: number;
   onChange: (value: number) => void;
 }
 
-const Counter = ({ label, value, onChange, ...props }: ICounterProps) => {
+const CounterInput = ({
+  label,
+  value,
+  onChange,
+  ...props
+}: ICounterInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleIncrease = () => {
-    onChange(value + 1);
+    if (inputRef.current) onChange(Math.min(100, +inputRef.current.value + 1));
   };
   const handleDecrease = () => {
-    onChange(Math.max(0, value - 1));
+    if (inputRef.current) onChange(Math.max(0, +inputRef.current.value - 1));
+  };
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange(Math.min(100, +event.target.value));
   };
 
   return (
@@ -29,21 +37,19 @@ const Counter = ({ label, value, onChange, ...props }: ICounterProps) => {
       <div className="flex items-center justify-between rounded-xl bg-white p-[17px]">
         <Minus size={16} className="text-desert" onClick={handleDecrease} />
 
-        <p className="text-sm text-black">{value}</p>
+        <input
+          ref={inputRef}
+          type="number"
+          className="w-[26px] text-sm text-black outline-none"
+          value={value}
+          onChange={handleChangeInput}
+          {...props}
+        />
 
         <Plus size={16} className="text-desert" onClick={handleIncrease} />
       </div>
-
-      <input
-        readOnly
-        ref={inputRef}
-        type="number"
-        className="hidden"
-        value={value}
-        {...props}
-      />
     </div>
   );
 };
 
-export default Counter;
+export default CounterInput;
