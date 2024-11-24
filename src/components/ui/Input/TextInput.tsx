@@ -19,7 +19,9 @@ const TextInput = ({ label, className, icon, ...props }: ITextInputProps) => {
   return (
     <div>
       {label && (
-        <label className="text-xs font-medium text-gray">{label}</label>
+        <label className="mb-3 block text-xs font-medium text-gray">
+          {label}
+        </label>
       )}
 
       <div className="relative">
@@ -30,7 +32,6 @@ const TextInput = ({ label, className, icon, ...props }: ITextInputProps) => {
           className={twMerge(
             "w-full rounded-xl border-none p-4 text-sm outline-none",
             "placeholder:font-light",
-            label && "mt-3",
             icon && "pl-[45px]",
             className,
           )}

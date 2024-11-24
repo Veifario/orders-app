@@ -34,13 +34,14 @@ const CounterInput = ({
         </label>
       )}
 
-      <div className="flex items-center justify-between rounded-xl bg-white p-[17px]">
+      <div className="flex items-center justify-between rounded-xl bg-white p-4">
         <Minus size={16} className="text-desert" onClick={handleDecrease} />
 
         <input
           ref={inputRef}
           type="number"
-          className="w-[26px] text-sm text-black outline-none"
+          className="text-sm text-black outline-none"
+          style={{ width: String(value).length * 9 - 0.5 + "px" }}
           value={value}
           onChange={handleChangeInput}
           {...props}

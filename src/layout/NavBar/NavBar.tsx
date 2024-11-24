@@ -11,8 +11,8 @@ const NavBar = () => {
           {({ isActive }) => (
             <div
               className={twMerge(
-                "m-auto flex h-full w-[56px] flex-col items-center justify-center gap-[6px] duration-200",
-                isActive && "rounded-md bg-primary",
+                "m-auto flex h-full w-[56px] flex-col items-center justify-center gap-[6px] duration-200 rounded-md",
+                isActive && "bg-primary",
               )}
             >
               {cloneElement(item.icon, {
@@ -20,7 +20,7 @@ const NavBar = () => {
               })}
               <span
                 className={twMerge(
-                  "text-lightGray text-[10px] font-medium",
+                  "text-[10px] font-medium text-lightGray",
                   isActive && "text-white",
                 )}
               >

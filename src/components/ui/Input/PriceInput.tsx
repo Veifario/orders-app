@@ -9,14 +9,16 @@ const PriceInput = ({ label, ...props }: IPriceInputProps) => {
   return (
     <div>
       {label && (
-        <label className="text-xs font-medium text-gray">{label}</label>
+        <label className="mb-3 block text-xs font-medium text-gray">
+          {label}
+        </label>
       )}
 
-      <div className={twMerge("relative", label && "mt-3")}>
+      <div className={twMerge("relative")}>
         <input
           type="number"
           className={twMerge(
-            "w-full rounded-xl border-none px-4 py-[19px] text-sm font-medium outline-none",
+            "w-full rounded-xl border-none p-4 text-sm font-medium outline-none",
             "placeholder:font-light",
             "disabled:bg-[#EDE5CA]",
           )}
