@@ -58,7 +58,11 @@ const AddOrder = () => {
         }
       />
 
-      <PriceInput label="Итого" value={formData.soldPrice} disabled />
+      <PriceInput
+        label="Итого"
+        value={+formData.soldPrice * formData.amount}
+        disabled
+      />
 
       <div className="col-span-2 space-y-[14px]">
         <ClientCard />
