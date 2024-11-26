@@ -8,7 +8,7 @@ const ClientCard = () => {
   return (
     <div
       className={twMerge(
-        "max-h-20 overflow-hidden rounded-xl bg-white p-3 duration-200",
+        "max-h-[76px] overflow-hidden rounded-xl bg-white p-3 px-4 duration-200",
         isOpen && "max-h-[214px]",
       )}
     >
@@ -24,7 +24,7 @@ const ClientCard = () => {
             <p className="text-sm text-[#A5A5A5]">ID34</p>
           </div>
 
-          <div className="mt-3 flex items-center gap-3">
+          <div className="mt-2 flex items-center gap-3">
             <div className="flex items-center gap-1">
               <CalendarDays size={15} className="text-desert" />
               <p className="text-[13px] font-medium text-[#4F4F4F]">

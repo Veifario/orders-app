@@ -27,7 +27,7 @@ const Modal = ({ children, isOpen, setIsOpen }: IModalProps) => {
       >
         <div onClick={(event) => event.stopPropagation()}>{children}</div>
       </div>,
-      document.getElementById("modals-root")!,
+      document.getElementById("modal-root")!,
     );
 };
 

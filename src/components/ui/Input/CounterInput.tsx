@@ -34,7 +34,7 @@ const CounterInput = ({
         </label>
       )}
 
-      <div className="flex items-center justify-between rounded-xl bg-white p-4">
+      <div className="flex items-center justify-between rounded-xl bg-white p-4 py-[14px]">
         <Minus size={16} className="text-desert" onClick={handleDecrease} />
 
         <input

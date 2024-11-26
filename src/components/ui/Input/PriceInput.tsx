@@ -18,7 +18,7 @@ const PriceInput = ({ label, ...props }: IPriceInputProps) => {
         <input
           type="number"
           className={twMerge(
-            "w-full rounded-xl border-none p-4 text-sm font-medium outline-none",
+            "w-full rounded-xl border-none p-4 py-[14px] text-sm font-medium outline-none",
             "placeholder:font-light",
             "disabled:bg-[#EDE5CA]",
           )}
