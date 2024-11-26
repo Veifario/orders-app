@@ -27,8 +27,8 @@ const PriceInput = ({ label, ...props }: IPriceInputProps) => {
 
         <span
           className={twMerge(
-            "absolute right-4 top-1/2 flex h-[50%] -translate-y-1/2 items-center border-l-2 border-[#B0B0B0A6] bg-white pl-3 text-sm text-desert",
-            props.disabled && "bg-[#EDE5CA] text-black",
+            "absolute right-4 top-1/2 flex h-[50%] -translate-y-1/2 items-center border-l-2 border-[#B0B0B0A6] bg-transparent pl-3 text-sm text-desert",
+            props.disabled && "text-black",
           )}
         >
           $

@@ -1,7 +1,8 @@
-import { ChevronLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useLocation, useMatches, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { ChevronLeft } from "lucide-react";
+import { useAppSelector } from "@/hooks/redux";
 
 const Header = () => {
   const matches = useMatches();
@@ -9,10 +10,18 @@ const Header = () => {
   const { pathname } = useLocation();
 
   const [headerText, setHeaderText] = useState("");
+  const [extraNavigation, setExtraNavigation] = useState<ReactElement | null>(
+    null,
+  );
+
+  const { data } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     matches.forEach((e) => {
       setHeaderText((e.handle as { crumb: string })?.crumb);
+      setExtraNavigation(
+        (e.handle as { extraNavigation: ReactElement })?.extraNavigation,
+      );
     });
   }, [matches]);
 
@@ -28,13 +37,14 @@ const Header = () => {
       )}
     >
       {pathname === "/" ? (
-        <p className="font-semibold">Иван Иванов</p>
+        <p className="font-semibold">{data && data.name}</p>
       ) : (
         <>
           <button className="absolute left-3" onClick={handleBack}>
             <ChevronLeft size={24} />
           </button>
-          <h2 className="justify-self-center font-semibold">{headerText}</h2>
+          <h2 className="font-semibold">{headerText}</h2>
+          <div className="absolute right-3">{extraNavigation}</div>
         </>
       )}
     </div>

@@ -1,12 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 import ProtectedRoute from "./ProtectedRoute";
 
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
-import Clients from "@/pages/Clients/Clients";
 import History from "@/pages/History/History";
 import AddOrder from "@/pages/AddOrder/AddOrder";
+import Customers from "@/pages/Customers/Customers";
+import AddCustomer from "@/pages/AddCustomer/AddCustomer";
 
 export const router = createBrowserRouter([
   {
@@ -18,11 +20,28 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/clients",
-        element: <Clients />,
-        handle: {
-          crumb: "Mijozlar ro'yxati",
-        },
+        path: "/customers",
+        children: [
+          {
+            index: true,
+            element: <Customers />,
+            handle: {
+              crumb: "Mijozlar ro'yxati",
+              extraNavigation: (
+                <Link to="/customers/add">
+                  <Plus className="text-desert" size={24} />
+                </Link>
+              ),
+            },
+          },
+          {
+            path: "add",
+            element: <AddCustomer />,
+            handle: {
+              crumb: "Mijoz yaratish",
+            },
+          },
+        ],
       },
       {
         path: "/history",

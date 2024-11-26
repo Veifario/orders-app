@@ -1,16 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import MainLayout from "@/layout/MainLayout/MainLayout";
 
+import { isSignedIn } from "@/helpers/auth.helper";
+
 const ProtectedRoute = () => {
-  // isSignedIn()?
-  // : (
-  //   <Navigate to="/login" />
-  // );
-  return (
+  return isSignedIn() ? (
     <MainLayout>
       <Outlet />
     </MainLayout>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { Search, TextSearch } from "lucide-react";
+import { useAppDispatch } from "@/hooks/redux";
 
 import TextInput from "@/components/ui/Input/TextInput";
-import OrderCard from "./components/OrderCard/OrderCard";
-import FilterModal from "./components/FilterModal/FilterModal";
-import { twMerge } from "tailwind-merge";
+import FilterModal from "./components/FilterModal";
+import OrdersList from "./components/OrdersList";
+
+import { ordersThunk } from "@/store/thunks/orders.thunk";
 
 const History = () => {
+  const dispatch = useAppDispatch();
+
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isFilterActive, setIsFilterActive] = useState(false);
+
+  useEffect(() => {
+    const promise = dispatch(ordersThunk.getAll());
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
 
   return (
     <>
@@ -32,24 +44,7 @@ const History = () => {
           </button>
         </div>
 
-        <div className="space-y-2">
-          {Array.from({ length: 20 }).map((__, index) => (
-            <OrderCard
-              key={index}
-              status={
-                index % 2
-                  ? "canceled"
-                  : index % 3
-                    ? "waiting"
-                    : index % 4
-                      ? "return"
-                      : index % 5
-                        ? "defect"
-                        : "success"
-              }
-            />
-          ))}
-        </div>
+        <OrdersList />
       </div>
 
       <FilterModal

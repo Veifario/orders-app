@@ -40,8 +40,8 @@ const CounterInput = ({
         <input
           ref={inputRef}
           type="number"
-          className="text-sm text-black outline-none appearance-auto "
-          style={{ width: String(value).length * 9 - 0.5 + "px" }}
+          className="appearance-auto text-sm text-black outline-none"
+          style={{ width: String(value).length * 9 + "px" }}
           value={value}
           onChange={handleChangeInput}
           {...props}

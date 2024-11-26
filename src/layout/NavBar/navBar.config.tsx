@@ -7,7 +7,7 @@ export const navItems = [
     title: "Главная",
   },
   {
-    path: "/clients",
+    path: "/customers",
     icon: <Users />,
     title: "Клиенты",
   },
