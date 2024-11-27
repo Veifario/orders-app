@@ -10,6 +10,7 @@ import Button from "@/components/ui/Button/Button";
 import { isSignedIn, setLocalStorage } from "@/helpers/auth.helper";
 import { loginThunk } from "@/store/thunks/login.thunk";
 import { setUserData } from "@/store/slices/user.slice";
+import { phoneNumberRegex } from "@/constants/regex";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Login = () => {
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
- 
+
   const handleLogin = () => {
     setIsLoading(true);
 
@@ -59,12 +60,13 @@ const Login = () => {
           className="bg-[#F5F5F5]"
           label="Telefon raqami"
           placeholder="Telefon"
-          type="number"
+          pattern="[0-9]*"
+          inputMode="numeric"
           value={formData.phone}
           onChange={(event) =>
             setFormData((prevState) => ({
               ...prevState,
-              phone: event.target.value,
+              phone: event.target.value.replace(phoneNumberRegex, ""),
             }))
           }
         />

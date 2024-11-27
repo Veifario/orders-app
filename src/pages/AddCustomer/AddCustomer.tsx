@@ -7,6 +7,8 @@ import TextInput from "@/components/ui/Input/TextInput";
 import Button from "@/components/ui/Button/Button";
 import DoubleInput from "@/components/ui/Input/DoubleInput";
 
+import { phoneNumberRegex } from "@/constants/regex";
+
 import { customersThunk } from "@/store/thunks/customers.thunk";
 
 const AddCustomer = () => {
@@ -29,8 +31,7 @@ const AddCustomer = () => {
     setIsLoading(true);
     dispatch(
       customersThunk.create({
-        first_name: "test",
-        last_name: "test",
+        full_name: formData.fullName,
         birthday: formData.dateOfBirth,
         height: formData.height,
         lower_clothing_size: formData.downWear,
@@ -86,12 +87,13 @@ const AddCustomer = () => {
       <TextInput
         label="Telefon raqami"
         placeholder="Telefon raqami"
-        type="number"
+        pattern="[0-9]*"
+        inputMode="numeric"
         value={formData.phone}
         onChange={(event) =>
           setFormData((prevState) => ({
             ...prevState,
-            phone: event.target.value,
+            phone: event.target.value.replace(phoneNumberRegex, ""),
           }))
         }
       />

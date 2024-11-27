@@ -1,5 +1,7 @@
-import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, InputHTMLAttributes, useRef } from "react";
+import { Minus, Plus } from "lucide-react";
+
+import { digitsRegex } from "@/constants/regex";
 
 interface ICounterInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -23,7 +25,7 @@ const CounterInput = ({
     if (inputRef.current) onChange(Math.max(0, +inputRef.current.value - 1));
   };
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(Math.min(100, +event.target.value));
+    onChange(Math.min(100, +event.target.value.replace(digitsRegex, "")));
   };
 
   return (
@@ -39,7 +41,8 @@ const CounterInput = ({
 
         <input
           ref={inputRef}
-          type="number"
+          pattern="[0-9]*"
+          inputMode="numeric"
           className="appearance-auto text-sm text-black outline-none"
           style={{ width: String(value).length * 9 + "px" }}
           value={value}

@@ -29,9 +29,7 @@ class CustomersThunk {
     `${this.type}/create`,
     async (payload: CustomerCreateRequestBody, thunkApi) => {
       try {
-        await mainInstance.post(`/users-info`, {
-          payload,
-        });
+        await mainInstance.post(`/users-info`, payload);
       } catch (error: any) {
         toastErrorHandler(error);
         return thunkApi.rejectWithValue(error);

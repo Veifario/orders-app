@@ -1,3 +1,4 @@
+import { digitsRegex } from "@/constants/regex";
 import { ChangeEvent } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -21,10 +22,10 @@ const DoubleInput = ({
   onChangeTwo,
 }: IDoubleInputProps) => {
   const handleChangeInputOne = (event: ChangeEvent<HTMLInputElement>) => {
-    onChangeOne(Math.min(900, +event.target.value));
+    onChangeOne(Math.min(900, +event.target.value.replace(digitsRegex, "")));
   };
   const handleChangeInputTwo = (event: ChangeEvent<HTMLInputElement>) => {
-    onChangeTwo(Math.min(900, +event.target.value));
+    onChangeTwo(Math.min(900, +event.target.value.replace(digitsRegex, "")));
   };
 
   return (
@@ -38,9 +39,10 @@ const DoubleInput = ({
 
       <div className="relative grid w-full grid-cols-2 rounded-xl bg-white px-4 py-[14px]">
         <input
-          type="number"
+          pattern="[0-9]*"
+          inputMode="numeric"
           className={twMerge(
-            "w-full border-none bg-transparent text-sm outline-none m-auto px-2",
+            "m-auto w-full border-none bg-transparent px-2 text-sm outline-none",
             "placeholder:font-light",
           )}
           value={valueOne}
@@ -48,9 +50,10 @@ const DoubleInput = ({
         />
 
         <input
-          type="number"
+          pattern="[0-9]*"
+          inputMode="numeric"
           className={twMerge(
-            "w-full border-none bg-transparent text-sm outline-none m-auto px-2",
+            "m-auto w-full border-none bg-transparent px-2 text-sm outline-none",
             "placeholder:font-light",
           )}
           value={valueTwo}
