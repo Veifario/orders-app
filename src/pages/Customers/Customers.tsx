@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Search } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
-import ClientCard from "@/components/shared/ClientCard/ClientCard";
 import TextInput from "@/components/ui/Input/TextInput";
+import CustomerCard from "@/components/shared/CustomerCard/CustomerCard";
 
 import { customersThunk } from "@/store/thunks/customers.thunk";
 
@@ -33,7 +33,9 @@ const Customers = () => {
                 className="h-[76px] w-full animate-pulse rounded-xl bg-lightGray"
               />
             ))
-          : data.map((__, index) => <ClientCard key={index} />)}
+          : data.map((customer) => (
+              <CustomerCard key={customer.id} customer={customer} />
+            ))}
       </div>
     </div>
   );

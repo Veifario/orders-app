@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { OrderStatType, OrderType } from "@/types/orders.types";
 import { ordersThunk } from "../thunks/orders.thunk";
+
+import {
+  CountryType,
+  OrderStatType,
+  OrderType,
+  PaymentMethodType,
+} from "@/types/orders.types";
 
 type InitialStateType = {
   stats: {
@@ -12,6 +18,8 @@ type InitialStateType = {
     data: OrderType[];
     isLoading: boolean;
   };
+  countries: CountryType[];
+  paymentMethods: PaymentMethodType[];
 };
 
 const initialState: InitialStateType = {
@@ -23,6 +31,8 @@ const initialState: InitialStateType = {
     data: [],
     isLoading: false,
   },
+  countries: [],
+  paymentMethods: [],
 };
 
 const ordersSlice = createSlice({
@@ -59,6 +69,20 @@ const ordersSlice = createSlice({
           state.historyList.isLoading = false;
         },
       );
+
+    builder.addCase(
+      ordersThunk.getCountries.fulfilled,
+      (state, { payload }: PayloadAction<CountryType[]>) => {
+        state.countries = payload;
+      },
+    );
+
+    builder.addCase(
+      ordersThunk.getPaymentMethods.fulfilled,
+      (state, { payload }: PayloadAction<PaymentMethodType[]>) => {
+        state.paymentMethods = payload;
+      },
+    );
   },
 });
 

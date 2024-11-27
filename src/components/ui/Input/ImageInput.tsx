@@ -1,26 +1,41 @@
+import { upload } from "@/services/upload";
 import { X } from "lucide-react";
-import { InputHTMLAttributes, useRef, useState } from "react";
+import { InputHTMLAttributes, useEffect, useRef, useState } from "react";
 
-interface IImageInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IImageInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
+  value: string;
+
   label?: string;
+
+  onChange: (id: number) => void;
 }
 
-const ImageInput = ({ label, ...props }: IImageInputProps) => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+const ImageInput = ({ value, label, onChange, ...props }: IImageInputProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(
+    value || null,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (value === "") setSelectedImage(null);
+  }, [value]);
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files;
+    upload(file).then(({ data }) => {
+      onChange(data.media_id);
+    });
+
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file[0]);
     }
   };
-
-  const removeImage = () => {
+  const handleRemoveImage = () => {
     setSelectedImage(null);
   };
 
@@ -36,7 +51,7 @@ const ImageInput = ({ label, ...props }: IImageInputProps) => {
         ref={inputRef}
         id="image-upload"
         type="file"
-        accept="image/*"
+        accept=".jpg, .jpeg, .png"
         className="hidden"
         onChange={handleImageChange}
         {...props}
@@ -56,7 +71,7 @@ const ImageInput = ({ label, ...props }: IImageInputProps) => {
 
             <button
               className="absolute right-2 top-2 flex size-6 items-center justify-center rounded-full bg-white"
-              onClick={removeImage}
+              onClick={handleRemoveImage}
             >
               <X size={16} className="text-gray" />
             </button>
@@ -64,7 +79,7 @@ const ImageInput = ({ label, ...props }: IImageInputProps) => {
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <p className="text-center text-sm font-medium text-[#A3A3A3]">
-              Загрузите фото
+              Suratlarni yuklang
             </p>
           </div>
         )}

@@ -40,15 +40,20 @@ const Select = ({
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     if (!isSearchable) return;
-
     onChange({ ...value, label: event.target.value });
-
     setFilteredOptions(
-      options.filter((option) => option.label.includes(event.target.value)),
+      options.filter((option) =>
+        option.label.toLowerCase().includes(event.target.value.toLowerCase()),
+      ),
     );
   };
   const handleDropdown = () => {
-    setIsDropdownVisible((prevState) => !prevState);
+    setIsDropdownVisible((prevState) => {
+      if (!filteredOptions.length) {
+        setFilteredOptions(options);
+      }
+      return !prevState;
+    });
   };
 
   return (

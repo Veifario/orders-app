@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
-import { StatusType } from "@/types/global.types";
+import { StatusNameType } from "@/types/global.types";
 
 interface IBadgeProps {
-  type: StatusType;
+  type: StatusNameType;
 }
 
 const Badge = ({ type }: IBadgeProps) => {

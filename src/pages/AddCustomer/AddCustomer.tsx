@@ -10,6 +10,7 @@ import DoubleInput from "@/components/ui/Input/DoubleInput";
 import { phoneNumberRegex } from "@/constants/regex";
 
 import { customersThunk } from "@/store/thunks/customers.thunk";
+import { toast } from "react-toastify";
 
 const AddCustomer = () => {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ const AddCustomer = () => {
       .unwrap()
       .then(() => {
         navigate("/customers");
+        toast.success(`Mijoz ${formData.fullName}, yaratilgan`);
       })
       .finally(() => {
         setIsLoading(false);

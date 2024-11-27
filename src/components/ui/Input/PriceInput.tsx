@@ -1,11 +1,16 @@
 import { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface IPriceInputProps extends InputHTMLAttributes<HTMLInputElement> {
+import { digitsRegex } from "@/constants/regex";
+
+interface IPriceInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   label?: string;
+
+  onChange?: (value: number) => void;
 }
 
-const PriceInput = ({ label, ...props }: IPriceInputProps) => {
+const PriceInput = ({ label, onChange, ...props }: IPriceInputProps) => {
   return (
     <div>
       {label && (
@@ -16,12 +21,16 @@ const PriceInput = ({ label, ...props }: IPriceInputProps) => {
 
       <div className={twMerge("relative")}>
         <input
-          type="number"
+          pattern="[0-9]*"
+          inputMode="numeric"
           className={twMerge(
             "w-full rounded-xl border-none p-4 py-[14px] text-sm font-medium outline-none",
             "placeholder:font-light",
             "disabled:bg-[#EDE5CA]",
           )}
+          onChange={(event) =>
+            onChange && onChange(+event.target.value.replace(digitsRegex, ""))
+          }
           {...props}
         />
 

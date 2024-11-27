@@ -15,7 +15,9 @@ const OrdersList = () => {
               className="h-[104.5px] w-full animate-pulse rounded-xl bg-lightGray"
             />
           ))
-        : data.map((__, index) => <OrderCard key={index} status="canceled" />)}
+        : data.map((el) => (
+            <OrderCard key={el.id} status={el.status.key} order={el} />
+          ))}
     </div>
   );
 };

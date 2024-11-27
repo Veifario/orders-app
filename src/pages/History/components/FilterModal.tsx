@@ -5,7 +5,7 @@ import Modal from "@/components/shared/Modal/Modal";
 import Button from "@/components/ui/Button/Button";
 import Checkbox from "@/components/ui/Input/Checkbox";
 
-import { StatusType } from "@/types/global.types";
+import { StatusNameType } from "@/types/global.types";
 
 interface IFilterModalProps {
   isOpen: boolean;
@@ -18,9 +18,9 @@ const FilterModal = ({
   setIsOpen,
   setIsFilterActive,
 }: IFilterModalProps) => {
-  const [checkedStatus, setCheckedStatus] = useState<StatusType | null>(null);
+  const [checkedStatus, setCheckedStatus] = useState<StatusNameType | null>(null);
 
-  const handleCheck = (status: StatusType) => {
+  const handleCheck = (status: StatusNameType) => {
     setCheckedStatus((prevState) => (prevState !== status ? status : null));
   };
   const handleSaveFilters = () => {
