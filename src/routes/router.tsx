@@ -9,6 +9,7 @@ import History from "@/pages/History/History";
 import AddOrder from "@/pages/AddOrder/AddOrder";
 import Customers from "@/pages/Customers/Customers";
 import AddCustomer from "@/pages/AddCustomer/AddCustomer";
+import Birthdays from "@/pages/Birthdays/Birthdays";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,13 @@ export const router = createBrowserRouter([
         element: <AddOrder />,
         handle: {
           crumb: "Buyurtma yaratish",
+        },
+      },
+      {
+        path: "/birthdays",
+        element: <Birthdays />,
+        handle: {
+          crumb: "Xabarlar",
         },
       },
     ],

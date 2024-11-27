@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useLocation, useMatches, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatches, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { ChevronLeft } from "lucide-react";
+import { Bell, ChevronLeft } from "lucide-react";
 import { useAppSelector } from "@/hooks/redux";
 
 const Header = () => {
@@ -33,11 +33,16 @@ const Header = () => {
     <div
       className={twMerge(
         "fixed top-0 z-50 flex h-14 w-full items-center justify-center rounded-b-2xl bg-white px-4",
-        pathname === "/" && "justify-start",
+        pathname === "/" && "items-center justify-between",
       )}
     >
       {pathname === "/" ? (
-        <p className="font-semibold">{data && data.name}</p>
+        <>
+          <p className="font-semibold">{data && data.name}</p>
+          <Link to="/birthdays">
+            <Bell className="text-black" size={24} />
+          </Link>
+        </>
       ) : (
         <>
           <button className="absolute left-3" onClick={handleBack}>
