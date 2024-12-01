@@ -1,24 +1,29 @@
-import { StatusType } from "./global.types";
+import { StatusNameType, StatusType } from "./global.types";
 
 export type OrderStatType = {
-  id: number;
+  id: 1;
   name: string;
-  orders_count: number;
+  key: StatusNameType;
+  created_at: null;
+  updated_at: null;
+  orders_count: 1;
 };
 
 export type OrderType = {
   id: number;
   user_id: number;
+  creator_id: number;
   status_id: number;
   count: number;
   price_arrival: string;
   price_sell: string;
   total: string;
+  total_1: string | null;
+  total_2: string | null;
   name: string;
   country_id: number;
   payment_id: number;
-  created_at: string;
-  updated_at: string;
+  payment_id_2: number;
   status: StatusType;
   user: {
     id: number;
@@ -42,9 +47,12 @@ export type OrderCreateRequestBodyType = {
   price_arrival: number;
   price_sell: number;
   total: number;
+  total_1: number;
+  total_2: number;
   name: string;
   country_id: number;
   payment_id: number;
+  payment_id_2: number;
   media: number[];
 };
 

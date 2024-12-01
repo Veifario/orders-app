@@ -11,8 +11,8 @@ const Badge = ({ type }: IBadgeProps) => {
     return {
       success: "Yakunlangan",
       waiting: "Kutilmoqda",
-      canceled: "Bekor qilingan",
-      return: "Qaytarilgan",
+      buyed: "Bekor qilingan",
+      not_buyed: "Qaytarilgan",
       defect: "Brak",
     }[type];
   };
@@ -25,8 +25,8 @@ const Badge = ({ type }: IBadgeProps) => {
           //Thanks for UI/UX, we have hardcode
           success: "bg-[#18AE4A12] text-success",
           waiting: "bg-[#F2BF1A14] text-primary",
-          canceled: "bg-[#F112121A] text-error",
-          return: "bg-[#12C4F11A] text-[#126BF1]",
+          buyed: "bg-[#F112121A] text-error",
+          not_buyed: "bg-[#12C4F11A] text-[#126BF1]",
           defect: "bg-[#79717A1A] text-[#6B706C]",
         }[type],
       )}

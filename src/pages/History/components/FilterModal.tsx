@@ -1,30 +1,54 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import { useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import Modal from "@/components/shared/Modal/Modal";
 import Button from "@/components/ui/Button/Button";
 import Checkbox from "@/components/ui/Input/Checkbox";
 
-import { StatusNameType } from "@/types/global.types";
+import { ordersThunk } from "@/store/thunks/orders.thunk";
 
 interface IFilterModalProps {
   isOpen: boolean;
+  checkedStatus: number | null;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setIsFilterActive: Dispatch<SetStateAction<boolean>>;
+  setCheckedStatus: Dispatch<SetStateAction<number | null>>;
 }
 
 const FilterModal = ({
   isOpen,
+  checkedStatus,
   setIsOpen,
   setIsFilterActive,
+  setCheckedStatus,
 }: IFilterModalProps) => {
-  const [checkedStatus, setCheckedStatus] = useState<StatusNameType | null>(null);
+  const dispatch = useAppDispatch();
+  const location = useLocation();
 
-  const handleCheck = (status: StatusNameType) => {
-    setCheckedStatus((prevState) => (prevState !== status ? status : null));
+  const { data: statsList, isLoading } = useAppSelector(
+    (state) => state.orders.stats,
+  );
+
+  useEffect(() => {
+    if (location.state?.filterStatusId) {
+      setCheckedStatus(location.state.filterStatusId);
+      setIsFilterActive(location.state.filterStatusId);
+    }
+
+    const promise = dispatch(ordersThunk.getStats());
+    return () => {
+      promise.abort();
+    };
+  }, []);
+
+  const handleCheck = (statusId: number) => {
+    setCheckedStatus((prevState) => (prevState !== statusId ? statusId : null));
   };
   const handleSaveFilters = () => {
     setIsFilterActive(checkedStatus !== null);
+    dispatch(ordersThunk.filter({ status_id: checkedStatus || undefined }));
     setIsOpen(false);
   };
 
@@ -37,46 +61,27 @@ const FilterModal = ({
       >
         <h3 className="text-[28px] font-bold">Status</h3>
 
-        <div className="mt-10 space-y-4 divide-y divide-[#EEEEEE]">
-          <div
-            className="flex items-center justify-between"
-            onClick={() => handleCheck("success")}
-          >
-            <p className="font-medium">Yakunlangan</p>
-            <Checkbox checked={checkedStatus === "success"} readOnly />
-          </div>
-
-          <div
-            className="flex items-center justify-between pt-4"
-            onClick={() => handleCheck("waiting")}
-          >
-            <p className="font-medium">Kutilmoqda</p>
-            <Checkbox checked={checkedStatus === "waiting"} readOnly />
-          </div>
-
-          <div
-            className="flex items-center justify-between pt-4"
-            onClick={() => handleCheck("canceled")}
-          >
-            <p className="font-medium">Bekor qilingan</p>
-            <Checkbox checked={checkedStatus === "canceled"} readOnly />
-          </div>
-
-          <div
-            className="flex items-center justify-between pt-4"
-            onClick={() => handleCheck("return")}
-          >
-            <p className="font-medium">Qaytarilgan</p>
-            <Checkbox checked={checkedStatus === "return"} readOnly />
-          </div>
-
-          <div
-            className="flex items-center justify-between py-4"
-            onClick={() => handleCheck("defect")}
-          >
-            <p className="font-medium">Brak</p>
-            <Checkbox checked={checkedStatus === "defect"} readOnly />
-          </div>
+        <div className="mt-10 divide-y divide-[#EEEEEE]">
+          {isLoading ? (
+            <div className="space-y-[2px]">
+              {Array.from({ length: 5 }).map((__, index) => (
+                <div
+                  key={index}
+                  className="h-[55px] w-full animate-pulse rounded-xl bg-lightGray"
+                />
+              ))}
+            </div>
+          ) : (
+            statsList.map((stat) => (
+              <div
+                className="flex items-center justify-between py-4"
+                onClick={() => handleCheck(stat.id)}
+              >
+                <p className="font-medium">{stat.name}</p>
+                <Checkbox checked={checkedStatus === stat.id} readOnly />
+              </div>
+            ))
+          )}
         </div>
 
         <Button className="mt-10" onClick={handleSaveFilters}>

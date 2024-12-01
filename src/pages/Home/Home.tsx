@@ -1,12 +1,15 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { homeStatisticBlocks } from "./home.config";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+
 import { userThunk } from "@/store/thunks/user.thunk";
 import { ordersThunk } from "@/store/thunks/orders.thunk";
 
 const Home = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { data: statsList, isLoading } = useAppSelector(
     (state) => state.orders.stats,
@@ -21,6 +24,10 @@ const Home = () => {
     };
   }, []);
 
+  const handleFilterHistory = (status_id: number) => {
+    navigate("history", { state: { filterStatusId: status_id } });
+  };
+
   return (
     <div className="grid grid-cols-2 gap-2">
       {isLoading
@@ -34,18 +41,19 @@ const Home = () => {
             <div
               key={el.id}
               className="flex flex-col justify-between rounded-xl bg-white p-[10px] pt-0"
+              onClick={() => handleFilterHistory(el.id)}
             >
               <div className="flex items-center gap-[13px]">
                 <div
                   style={{
                     backgroundColor: homeStatisticBlocks.find(
-                      (block) => block.title === el.name,
+                      (block) => block.key === el.key,
                     )?.iconBackgroundColor,
                   }}
                   className="rounded-lg p-[6px]"
                 >
                   {
-                    homeStatisticBlocks.find((block) => block.title === el.name)
+                    homeStatisticBlocks.find((block) => block.key === el.key)
                       ?.icon
                   }
                 </div>

@@ -1,6 +1,8 @@
 import { MoveDown, MoveUp, Pencil } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import Badge from "@/components/shared/Badge/Badge";
+
 import { StatusNameType } from "@/types/global.types";
 import { OrderType } from "@/types/orders.types";
 
@@ -10,7 +12,11 @@ interface IOrderCardProps {
 }
 
 const OrderCard = ({ status, order }: IOrderCardProps) => {
-  const handleEdit = () => {};
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    navigate(`${order.id}`);
+  };
 
   return (
     <div className="w-full rounded-xl bg-white p-3">
@@ -35,12 +41,16 @@ const OrderCard = ({ status, order }: IOrderCardProps) => {
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-1">
             <MoveDown size={14} className="text-error" />
-            <p className="text-[15px] font-medium text-error">{order.price_arrival}</p>
+            <p className="text-[15px] font-medium text-error">
+              {order.price_arrival}
+            </p>
           </div>
 
           <div className="flex items-center gap-1">
             <MoveUp size={14} className="text-success" />
-            <p className="text-[15px] font-medium text-success">{order.price_sell}</p>
+            <p className="text-[15px] font-medium text-success">
+              {order.price_sell}
+            </p>
           </div>
         </div>
 

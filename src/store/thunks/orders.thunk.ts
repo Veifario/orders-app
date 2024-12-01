@@ -41,11 +41,58 @@ class OrdersThunk {
     }
   });
 
+  filter = createAsyncThunk(
+    `${this.type}/filter`,
+    async (filters: { status_id?: number; search?: string }, thunkApi) => {
+      try {
+        const response: AxiosResponse<OrderType[]> = await mainInstance.post(
+          `/orders/filter`,
+          filters,
+        );
+        return response.data;
+      } catch (error: any) {
+        toastErrorHandler(error);
+        return thunkApi.rejectWithValue(error);
+      }
+    },
+  );
+
+  getOne = createAsyncThunk(
+    `${this.type}/getOne`,
+    async (orderId: string, thunkApi) => {
+      try {
+        const response: AxiosResponse<OrderType> = await mainInstance.get(
+          `/orders/${orderId}`,
+          { signal: thunkApi.signal },
+        );
+        return response.data;
+      } catch (error: any) {
+        toastErrorHandler(error);
+        return thunkApi.rejectWithValue(error);
+      }
+    },
+  );
+
   create = createAsyncThunk(
     `${this.type}/create`,
     async (payload: OrderCreateRequestBodyType, thunkApi) => {
       try {
         await mainInstance.post(`/orders`, payload);
+      } catch (error: any) {
+        toastErrorHandler(error);
+        return thunkApi.rejectWithValue(error);
+      }
+    },
+  );
+
+  edit = createAsyncThunk(
+    `${this.type}/edit`,
+    async (
+      { orderId, data }: { orderId: string; data: OrderCreateRequestBodyType },
+      thunkApi,
+    ) => {
+      try {
+        await mainInstance.put(`/orders/${orderId}`, data);
       } catch (error: any) {
         toastErrorHandler(error);
         return thunkApi.rejectWithValue(error);

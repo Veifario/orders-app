@@ -11,7 +11,7 @@ const NavBar = () => {
           {({ isActive }) => (
             <div
               className={twMerge(
-                "m-auto flex h-full w-[56px] flex-col items-center justify-center gap-[6px] duration-200 rounded-md",
+                "m-auto flex h-full w-[56px] flex-col items-center justify-center gap-[6px] rounded-md duration-200",
                 isActive && "bg-primary",
               )}
             >

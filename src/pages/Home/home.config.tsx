@@ -1,41 +1,30 @@
-import {
-  CircleCheck,
-  CircleX,
-  Clock,
-  Package,
-  PackageX,
-  Undo2,
-} from "lucide-react";
+import { StatusNameType } from "@/types/global.types";
+import { CircleCheck, CircleX, Clock, Package } from "lucide-react";
+import { ReactElement } from "react";
 
-export const homeStatisticBlocks = [
+export const homeStatisticBlocks: {
+  icon: ReactElement;
+  iconBackgroundColor: string;
+  key: StatusNameType;
+}[] = [
   {
     icon: <Package color="#F2BF1A" size={25} />,
     iconBackgroundColor: "#F2BF1A1A",
-    title: "Всего заказов",
+    key: "buyed",
   },
   {
     icon: <CircleCheck color="#18AE4A" size={25} />,
     iconBackgroundColor: "#33D1681A",
-    title: "Успешно",
+    key: "success",
   },
   {
     icon: <CircleX color="#F11212" size={25} />,
     iconBackgroundColor: "#D815151A",
-    title: "Отмена",
+    key: "not_buyed",
   },
   {
     icon: <Clock color="#4D5FEB" size={25} />,
     iconBackgroundColor: "#4660F51A",
-    title: "Ожидание",
-  },
-  {
-    icon: <Undo2 color="#F2BF1A" size={25} />,
-    iconBackgroundColor: "#E6CF391A",
-    title: "Возврат",
-  },
-  {
-    icon: <PackageX color="#8E8E8E" size={25} />,
-    iconBackgroundColor: "#3C3C3C1A",
-    title: "Брак",
+    key: "waiting",
   },
 ];

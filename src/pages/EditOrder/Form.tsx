@@ -1,59 +1,37 @@
-import { useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { Dispatch, SetStateAction, useMemo } from "react";
+import { useAppSelector } from "@/hooks/redux";
 
-import ImageInput from "@/components/ui/Input/ImageInput";
-import CounterInput from "@/components/ui/Input/CounterInput";
-import TextInput from "@/components/ui/Input/TextInput";
-import PriceInput from "@/components/ui/Input/PriceInput";
-import Select from "@/components/ui/Select/Select";
-import Button from "@/components/ui/Button/Button";
 import CustomerCard from "@/components/shared/CustomerCard/CustomerCard";
+import CounterInput from "@/components/ui/Input/CounterInput";
+import ImageInput from "@/components/ui/Input/ImageInput";
+import PriceInput from "@/components/ui/Input/PriceInput";
+import TextInput from "@/components/ui/Input/TextInput";
+import Select from "@/components/ui/Select/Select";
 
-import { customersThunk } from "@/store/thunks/customers.thunk";
-import { ordersThunk } from "@/store/thunks/orders.thunk";
-
-import { CustomerType } from "@/types/customers.types";
 import { digitsRegex } from "@/constants/regex";
 
-const defaultFormData = {
-  name: "",
-  imageUrl: "",
-  receiptUrl: "",
-  amount: 0,
-  arrivalPrice: 0,
-  soldPrice: 0,
-  total1: 0,
-  total2: 0,
-  customer: {
-    label: "",
-    value: "",
-  },
-  country: {
-    label: "",
-    value: "",
-  },
-  paymentMethod1: {
-    label: "",
-    value: "",
-  },
-  paymentMethod2: {
-    label: "",
-    value: "",
-  },
-};
+import { EditOrderFormType } from "./editOrder.types";
+import { CustomerType } from "@/types/customers.types";
 
-const AddOrder = () => {
-  const dispatch = useAppDispatch();
+interface IFormProps {
+  formData: EditOrderFormType;
+  setFormData: Dispatch<SetStateAction<EditOrderFormType>>;
+}
 
-  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [formData, setFormData] = useState(defaultFormData);
-
-  const { data: customersList, isLoading } = useAppSelector(
+const Form = ({ formData, setFormData }: IFormProps) => {
+  const { data: customersList, isLoading: isCustomersLoading } = useAppSelector(
     (state) => state.customers.customersList,
   );
-  const { countries, paymentMethods } = useAppSelector((state) => state.orders);
+  const {
+    countries,
+    paymentMethods,
+    stats: { data: statsList, isLoading: isStatsLoading },
+  } = useAppSelector((state) => state.orders);
 
+  const statusesOptions = useMemo(
+    () => statsList.map((e) => ({ label: e.name, value: e.id })),
+    [statsList],
+  );
   const customersOptions = useMemo(
     () => customersList.map((e) => ({ label: e.full_name, value: e.id })),
     [customersList],
@@ -66,56 +44,6 @@ const AddOrder = () => {
     () => paymentMethods.map((e) => ({ label: e.name, value: e.id })),
     [paymentMethods],
   );
-
-  useEffect(() => {
-    const customersPromise = dispatch(customersThunk.getAll());
-    const countriesPromise = dispatch(ordersThunk.getCountries());
-    const paymentPromise = dispatch(ordersThunk.getPaymentMethods());
-    return () => {
-      customersPromise.abort();
-      countriesPromise.abort();
-      paymentPromise.abort();
-    };
-  }, [dispatch]);
-
-  const handleCreate = () => {
-    setIsSubmitLoading(true);
-    dispatch(
-      ordersThunk.create({
-        status_id: 6,
-        name: formData.name,
-        user_id: +formData.customer.value,
-        count: formData.amount,
-        country_id: +formData.country.value,
-        media: [+formData.imageUrl, +formData.receiptUrl],
-        payment_id: +formData.paymentMethod1.value,
-        payment_id_2: +formData.paymentMethod2.value,
-        price_arrival: formData.arrivalPrice,
-        price_sell: formData.soldPrice,
-        total: formData.soldPrice * formData.amount,
-        total_1: +formData.total1,
-        total_2: +formData.total2,
-      }),
-    )
-      .unwrap()
-      .then(() => {
-        toast.success(`Buyurtma ${formData.name}, yaratilgan`);
-        setFormData(defaultFormData);
-      })
-      .finally(() => {
-        setIsSubmitLoading(false);
-      });
-  };
-
-  const isDisabled =
-    formData.name === "" ||
-    formData.imageUrl === "" ||
-    formData.receiptUrl === "" ||
-    formData.arrivalPrice === 0 ||
-    formData.soldPrice === 0 ||
-    formData.amount === 0 ||
-    formData.customer.value === "" ||
-    formData.country.value === "";
 
   return (
     <div className="grid grid-cols-2 gap-x-2 gap-y-3">
@@ -138,7 +66,7 @@ const AddOrder = () => {
           onChange={(customer) =>
             setFormData((prevState) => ({ ...prevState, customer }))
           }
-          disabled={isLoading}
+          disabled={isCustomersLoading}
           options={customersOptions}
         />
 
@@ -169,7 +97,7 @@ const AddOrder = () => {
 
       <Select
         label="Naqd pul"
-        placeholder="Naqd pul turini tanlang"
+        placeholder="To'lov"
         value={formData.paymentMethod1}
         onChange={(paymentMethod) =>
           setFormData((prevState) => ({
@@ -182,7 +110,7 @@ const AddOrder = () => {
 
       <Select
         label="Online"
-        placeholder="Online turini tanlang"
+        placeholder="To'lov"
         value={formData.paymentMethod2}
         onChange={(paymentMethod) =>
           setFormData((prevState) => ({
@@ -220,6 +148,23 @@ const AddOrder = () => {
           }))
         }
       />
+
+      <div className="col-span-2">
+        <Select
+          label="Status"
+          placeholder="Statusni tanlang"
+          className="border-2 border-[#EDE5CA]"
+          value={formData.status}
+          onChange={(status) =>
+            setFormData((prevState) => ({
+              ...prevState,
+              status: status,
+            }))
+          }
+          options={statusesOptions}
+          disabled={isStatsLoading}
+        />
+      </div>
 
       <PriceInput
         label="Kelish narxi"
@@ -281,18 +226,8 @@ const AddOrder = () => {
           }))
         }
       />
-
-      <div className="col-span-2 space-y-[14px]">
-        <Button
-          loading={isSubmitLoading}
-          onClick={handleCreate}
-          disabled={isDisabled}
-        >
-          Yaratish
-        </Button>
-      </div>
     </div>
   );
 };
 
-export default AddOrder;
+export default Form;

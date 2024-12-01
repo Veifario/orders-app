@@ -10,13 +10,14 @@ import { SelectOptionType } from "@/types/global.types";
 
 interface ISelectProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
-  value: SelectOptionType;
-  options: SelectOptionType[];
+  value: SelectOptionType<any>;
+  options: SelectOptionType<any>[];
 
+  className?: string;
   label?: string;
   isSearchable?: boolean;
 
-  onChange: (option: SelectOptionType) => void;
+  onChange: (option: SelectOptionType<any>) => void;
 }
 
 const Select = ({
@@ -24,6 +25,7 @@ const Select = ({
   value,
   options,
   isSearchable = false,
+  className,
   onChange,
   ...props
 }: ISelectProps) => {
@@ -32,7 +34,7 @@ const Select = ({
   const inputContainerRef = useRef<HTMLDivElement>(null);
 
   const [filteredOptions, setFilteredOptions] =
-    useState<SelectOptionType[]>(options);
+    useState<SelectOptionType<any>[]>(options);
 
   useOnClickOutside(inputContainerRef, () => {
     setIsDropdownVisible(false);
@@ -72,7 +74,10 @@ const Select = ({
         >
           <input
             type="text"
-            className="w-full rounded-xl bg-white px-4 py-[14px] text-sm outline-none"
+            className={twMerge(
+              "w-full rounded-xl bg-white px-4 py-[14px] text-sm outline-none",
+              className,
+            )}
             value={value.label}
             onChange={(event) => handleChangeInput(event)}
             readOnly={!isSearchable}

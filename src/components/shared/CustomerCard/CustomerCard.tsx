@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useNavigate } from "react-router-dom";
 import { CalendarDays, ChevronDown, Phone } from "lucide-react";
 
-import { CustomerType } from "@/types/customers.types";
+import Button from "@/components/ui/Button/Button";
+
 import { divideToDischarges } from "@/utils/formatters";
+
+import { CustomerType } from "@/types/customers.types";
 
 interface ICustomerCardProps {
   customer: CustomerType;
 }
 
 const CustomerCard = ({ customer }: ICustomerCardProps) => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleEdit = () => {
+    navigate(`${customer.id}`);
+  };
 
   return (
     <div
@@ -62,7 +72,13 @@ const CustomerCard = ({ customer }: ICustomerCardProps) => {
       </div>
 
       <div className="mt-[14px] border-t border-[#EFEFEF] pt-[13px]">
-        <p className="text-[15px] font-semibold">Ma'lumotlar:</p>
+        <div className="flex justify-between">
+          <p className="text-[15px] font-semibold">Ma'lumotlar:</p>
+
+          <Button onClick={handleEdit} className="w-min px-3 py-0">
+            o'zgartirish
+          </Button>
+        </div>
 
         <div className="mt-3 grid grid-cols-2 gap-x-[25px]">
           <div className="flex items-center justify-between">

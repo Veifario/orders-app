@@ -12,7 +12,8 @@ const Button = ({ children, className, loading, ...props }: IButtonProps) => {
   return (
     <button
       className={twMerge(
-        "w-full rounded-xl border-none bg-primary py-[14px] text-sm font-bold text-white outline-none",
+        "w-full rounded-xl border-none bg-primary py-[14px] text-sm font-bold text-white outline-none duration-150",
+        "disabled:bg-[#EDE5CA]",
         className,
       )}
       disabled={props.disabled || loading}

@@ -61,7 +61,7 @@ const Login = () => {
           label="Telefon raqami"
           placeholder="Telefon"
           pattern="[0-9]*"
-          inputMode="numeric"
+          inputMode="tel"
           value={formData.phone}
           onChange={(event) =>
             setFormData((prevState) => ({

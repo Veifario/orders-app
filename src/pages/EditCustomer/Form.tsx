@@ -1,67 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "@/hooks/redux";
+import { Dispatch, SetStateAction } from "react";
 
 import CounterInput from "@/components/ui/Input/CounterInput";
 import TextInput from "@/components/ui/Input/TextInput";
-import Button from "@/components/ui/Button/Button";
 import DoubleInput from "@/components/ui/Input/DoubleInput";
 
 import { phoneNumberRegex } from "@/constants/regex";
 
-import { customersThunk } from "@/store/thunks/customers.thunk";
-import { toast } from "react-toastify";
+import { EditCustomerFormType } from "./editCustomer.types";
 
-const AddCustomer = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+interface IFormProps {
+  formData: EditCustomerFormType;
+  setFormData: Dispatch<SetStateAction<EditCustomerFormType>>;
+}
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    dateOfBirth: "",
-    phone: "",
-    upWear: "",
-    downWear: "",
-    weight: 0,
-    height: 0,
-    shoeSize: 0,
-  });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleCreate = () => {
-    setIsLoading(true);
-    dispatch(
-      customersThunk.create({
-        full_name: formData.fullName,
-        birthday: formData.dateOfBirth,
-        height: formData.height,
-        lower_clothes_size: formData.downWear,
-        phone: formData.phone,
-        shoe_size: String(formData.shoeSize),
-        upper_clothes_size: formData.upWear,
-        weight: formData.weight,
-      }),
-    )
-      .unwrap()
-      .then(() => {
-        navigate("/customers");
-        toast.success(`Mijoz ${formData.fullName}, yaratilgan`);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const isDisabled =
-    formData.fullName === "" ||
-    formData.dateOfBirth === "" ||
-    formData.downWear === "" ||
-    formData.upWear === "" ||
-    formData.phone === "" ||
-    formData.weight === 0 ||
-    formData.height === 0 ||
-    formData.shoeSize === 0;
-
+const Form = ({ formData, setFormData }: IFormProps) => {
   return (
     <div className="grid grid-cols-2 gap-x-2 gap-y-3">
       <div className="col-span-2">
@@ -158,18 +110,8 @@ const AddCustomer = () => {
           }))
         }
       />
-
-      <div className="col-span-2 mt-4 space-y-[14px]">
-        <Button
-          loading={isLoading}
-          disabled={isDisabled}
-          onClick={handleCreate}
-        >
-          Yaratish
-        </Button>
-      </div>
     </div>
   );
 };
 
-export default AddCustomer;
+export default Form;

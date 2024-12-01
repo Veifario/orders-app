@@ -2,16 +2,23 @@ import { createBrowserRouter, Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 
 import ProtectedRoute from "./ProtectedRoute";
-
-import Home from "@/pages/Home/Home";
-import Login from "@/pages/Login/Login";
-import History from "@/pages/History/History";
-import AddOrder from "@/pages/AddOrder/AddOrder";
-import Customers from "@/pages/Customers/Customers";
-import AddCustomer from "@/pages/AddCustomer/AddCustomer";
-import Birthdays from "@/pages/Birthdays/Birthdays";
+import {
+  AddCustomer,
+  AddOrder,
+  Birthdays,
+  Customers,
+  EditCustomer,
+  EditOrder,
+  History,
+  Home,
+  Login,
+} from "./dynamicRoutes";
 
 export const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "/",
     element: <ProtectedRoute />,
@@ -42,14 +49,33 @@ export const router = createBrowserRouter([
               crumb: "Mijoz yaratish",
             },
           },
+          {
+            path: ":customerId",
+            element: <EditCustomer />,
+            handle: {
+              crumb: "Mijozni tahrirlash",
+            },
+          },
         ],
       },
       {
         path: "/history",
-        element: <History />,
-        handle: {
-          crumb: "Buyurtmalar tarixi",
-        },
+        children: [
+          {
+            index: true,
+            element: <History />,
+            handle: {
+              crumb: "Buyurtmalar tarixi",
+            },
+          },
+          {
+            path: ":orderId",
+            element: <EditOrder />,
+            handle: {
+              crumb: "Buyurtmani tahrirlash",
+            },
+          },
+        ],
       },
       {
         path: "/add",
@@ -66,9 +92,5 @@ export const router = createBrowserRouter([
         },
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);

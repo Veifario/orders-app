@@ -4,21 +4,21 @@ export const navItems = [
   {
     path: "/",
     icon: <Home />,
-    title: "Главная",
+    title: "Asosiy",
   },
   {
     path: "/customers",
     icon: <Users />,
-    title: "Клиенты",
+    title: "Mijozlar",
   },
   {
     path: "/history",
     icon: <List />,
-    title: "История",
+    title: "Tarixi",
   },
   {
     path: "/add",
     icon: <Plus />,
-    title: "Создать",
+    title: "Yaratish",
   },
 ];
