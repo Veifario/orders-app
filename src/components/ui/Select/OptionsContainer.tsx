@@ -1,8 +1,8 @@
 import { SelectOptionType } from "@/types/global.types";
 
 interface IOptionsContainerProps {
-  options: SelectOptionType[];
-  setOption: (option: SelectOptionType) => void;
+  options: SelectOptionType<any>[];
+  setOption: (option: SelectOptionType<any>) => void;
 }
 
 const OptionsContainer = ({ options, setOption }: IOptionsContainerProps) => {
