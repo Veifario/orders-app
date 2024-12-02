@@ -12,13 +12,15 @@ import { digitsRegex } from "@/constants/regex";
 
 import { EditOrderFormType } from "./editOrder.types";
 import { CustomerType } from "@/types/customers.types";
+import { OrderType } from "@/types/orders.types";
 
 interface IFormProps {
+  orderData: OrderType | null;
   formData: EditOrderFormType;
   setFormData: Dispatch<SetStateAction<EditOrderFormType>>;
 }
 
-const Form = ({ formData, setFormData }: IFormProps) => {
+const Form = ({ orderData, formData, setFormData }: IFormProps) => {
   const { data: customersList, isLoading: isCustomersLoading } = useAppSelector(
     (state) => state.customers.customersList,
   );
@@ -207,6 +209,7 @@ const Form = ({ formData, setFormData }: IFormProps) => {
 
       <ImageInput
         label="Mahsulotni rasimi"
+        previewUrl={orderData?.media[0].path}
         value={formData.imageUrl}
         onChange={(id) =>
           setFormData((prevState) => ({
@@ -218,6 +221,7 @@ const Form = ({ formData, setFormData }: IFormProps) => {
 
       <ImageInput
         label="To'lov cheki"
+        previewUrl={orderData?.media[1].path}
         value={formData.receiptUrl}
         onChange={(id) =>
           setFormData((prevState) => ({

@@ -1,5 +1,16 @@
 import { StatusNameType, StatusType } from "./global.types";
 
+export type MediaType = {
+  id: number;
+  path: string;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    orders_id: number;
+    media_id: number;
+  };
+};
+
 export type OrderStatType = {
   id: 1;
   name: string;
@@ -25,6 +36,7 @@ export type OrderType = {
   payment_id: number;
   payment_id_2: number;
   status: StatusType;
+  media: MediaType[];
   user: {
     id: number;
     full_name: string;

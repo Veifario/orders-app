@@ -83,8 +83,8 @@ const EditOrder = () => {
       const formData: EditOrderFormType = {
         amount: orderData.count,
         name: orderData.name,
-        imageUrl: "",
-        receiptUrl: "",
+        imageUrl: String(orderData.media[0].id),
+        receiptUrl: String(orderData.media[1].id),
         arrivalPrice: +orderData.price_arrival,
         soldPrice: +orderData.price_sell,
         customer: {
@@ -169,7 +169,11 @@ const EditOrder = () => {
   if (isOrderLoading) return <SpinnerFullPage wrapperClassName="h-full" />;
   return (
     <div>
-      <Form formData={formData} setFormData={setFormData} />
+      <Form
+        formData={formData}
+        setFormData={setFormData}
+        orderData={orderData}
+      />
 
       <Button
         className="mt-[14px] w-full"

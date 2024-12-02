@@ -7,11 +7,18 @@ interface IImageInputProps
   value: string;
 
   label?: string;
+  previewUrl?: string;
 
   onChange: (id: number) => void;
 }
 
-const ImageInput = ({ value, label, onChange, ...props }: IImageInputProps) => {
+const ImageInput = ({
+  value,
+  label,
+  onChange,
+  previewUrl,
+  ...props
+}: IImageInputProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
     value || null,
   );
@@ -20,6 +27,10 @@ const ImageInput = ({ value, label, onChange, ...props }: IImageInputProps) => {
   useEffect(() => {
     if (value === "") setSelectedImage(null);
   }, [value]);
+  useEffect(() => {
+    if (previewUrl)
+      setSelectedImage("https://azza.elmurod.tech/storage/" + previewUrl);
+  }, [previewUrl]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
