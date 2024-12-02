@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import TextInput from "@/components/ui/Input/TextInput";
@@ -11,6 +12,7 @@ import { customersThunk } from "@/store/thunks/customers.thunk";
 
 const Customers = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const isInitialMount = useRef(true);
 
@@ -23,11 +25,22 @@ const Customers = () => {
   const searchValue = useDebounce(inputValue);
 
   useEffect(() => {
-    const promise = dispatch(customersThunk.getAll());
-    return () => {
-      promise.abort();
-    };
-  }, []);
+    if (location.state?.birthday) {
+      const promise = dispatch(
+        customersThunk.filter({ birthday: location.state?.birthday }),
+      );
+
+      return () => {
+        promise.abort();
+      };
+    } else {
+      const promise = dispatch(customersThunk.getAll());
+
+      return () => {
+        promise.abort();
+      };
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -36,6 +49,7 @@ const Customers = () => {
       dispatch(
         customersThunk.filter({
           search: searchValue || undefined,
+          birthday: location.state?.birthday,
         }),
       );
     }

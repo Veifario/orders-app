@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CustomersSlice from "./slices/customers.slice";
 import OrdersSlice from "./slices/orders.slice";
 import UserSlice from "./slices/user.slice";
+import BirthdaysSlice from "./slices/birthdays.slice";
 
 const rootReducer = combineReducers({
   customers: CustomersSlice,
   orders: OrdersSlice,
-  user: UserSlice
+  birthdays: BirthdaysSlice,
+  user: UserSlice,
 });
 
 export const store = configureStore({
