@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { birthdaysThunk } from "@/store/thunks/birthdays.thunks";
+import { ChevronRight } from "lucide-react";
 
 const Birthdays = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +30,12 @@ const Birthdays = () => {
           ))
         : data.map((el) => (
             <div
-              className="rounded-xl bg-white px-3 py-4"
+              className="flex items-center justify-between rounded-xl bg-white px-3 py-4"
               onClick={() => handleFilter(el.birthday)}
             >
-              Bugun, {el.full_name} tug'ilgan kuni
+              <p>Bugun, {el.full_name} tug'ilgan kuni</p>
+
+              <ChevronRight className="text-desert" />
             </div>
           ))}
     </div>

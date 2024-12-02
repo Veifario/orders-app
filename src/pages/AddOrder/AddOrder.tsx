@@ -169,7 +169,7 @@ const AddOrder = () => {
 
       <Select
         label="Naqd pul"
-        placeholder="Naqd pul turini tanlang"
+        placeholder="To'lov"
         value={formData.paymentMethod1}
         onChange={(paymentMethod) =>
           setFormData((prevState) => ({
@@ -182,7 +182,7 @@ const AddOrder = () => {
 
       <Select
         label="Online"
-        placeholder="Online turini tanlang"
+        placeholder="To'lov"
         value={formData.paymentMethod2}
         onChange={(paymentMethod) =>
           setFormData((prevState) => ({

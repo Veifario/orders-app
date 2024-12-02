@@ -209,7 +209,7 @@ const Form = ({ orderData, formData, setFormData }: IFormProps) => {
 
       <ImageInput
         label="Mahsulotni rasimi"
-        previewUrl={orderData?.media[0].path}
+        previewUrl={orderData?.media[0]?.path}
         value={formData.imageUrl}
         onChange={(id) =>
           setFormData((prevState) => ({
@@ -221,7 +221,7 @@ const Form = ({ orderData, formData, setFormData }: IFormProps) => {
 
       <ImageInput
         label="To'lov cheki"
-        previewUrl={orderData?.media[1].path}
+        previewUrl={orderData?.media[1]?.path}
         value={formData.receiptUrl}
         onChange={(id) =>
           setFormData((prevState) => ({

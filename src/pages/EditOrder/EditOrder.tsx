@@ -83,8 +83,8 @@ const EditOrder = () => {
       const formData: EditOrderFormType = {
         amount: orderData.count,
         name: orderData.name,
-        imageUrl: String(orderData.media[0].id),
-        receiptUrl: String(orderData.media[1].id),
+        imageUrl: String(orderData.media[0]?.id),
+        receiptUrl: String(orderData.media[1]?.id),
         arrivalPrice: +orderData.price_arrival,
         soldPrice: +orderData.price_sell,
         customer: {
