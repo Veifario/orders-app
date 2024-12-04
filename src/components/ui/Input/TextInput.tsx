@@ -30,7 +30,7 @@ const TextInput = ({ label, className, icon, ...props }: ITextInputProps) => {
         <input
           type="text"
           className={twMerge(
-            "w-full rounded-xl border-none px-4 py-[14px] text-sm outline-none",
+            "w-full rounded-xl border-none px-4 py-[14px] text-sm outline-none bg-white min-h-[48px]",
             "placeholder:font-light",
             icon && "pl-[45px]",
             className,

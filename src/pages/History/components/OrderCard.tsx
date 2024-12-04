@@ -54,7 +54,7 @@ const OrderCard = ({ status, order }: IOrderCardProps) => {
           </div>
         </div>
 
-        <Badge type={status} />
+        <Badge type={status}>{order.status.name}</Badge>
       </div>
     </div>
   );

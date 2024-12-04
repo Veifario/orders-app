@@ -1,22 +1,14 @@
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { StatusNameType } from "@/types/global.types";
 
 interface IBadgeProps {
   type: StatusNameType;
+  children: ReactNode;
 }
 
-const Badge = ({ type }: IBadgeProps) => {
-  const displayName = () => {
-    return {
-      success: "Yakunlangan",
-      waiting: "Kutilmoqda",
-      buyed: "Bekor qilingan",
-      not_buyed: "Qaytarilgan",
-      defect: "Brak",
-    }[type];
-  };
-
+const Badge = ({ type, children }: IBadgeProps) => {
   return (
     <div
       className={twMerge(
@@ -31,7 +23,7 @@ const Badge = ({ type }: IBadgeProps) => {
         }[type],
       )}
     >
-      {displayName()}
+      {children}
     </div>
   );
 };

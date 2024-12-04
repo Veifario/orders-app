@@ -1,5 +1,5 @@
 import { StatusNameType } from "@/types/global.types";
-import { CircleCheck, CircleX, Clock, Package } from "lucide-react";
+import { CircleCheck, CircleX, Clock, Package, PackageX } from "lucide-react";
 import { ReactElement } from "react";
 
 export const homeStatisticBlocks: {
@@ -26,5 +26,10 @@ export const homeStatisticBlocks: {
     icon: <Clock color="#4D5FEB" size={25} />,
     iconBackgroundColor: "#4660F51A",
     key: "waiting",
+  },
+  {
+    icon: <PackageX color="#8E8E8E" size={25} />,
+    iconBackgroundColor: "#3C3C3C1A",
+    key: "defect",
   },
 ];
