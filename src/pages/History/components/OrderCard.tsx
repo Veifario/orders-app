@@ -30,7 +30,7 @@ const OrderCard = ({ status, order }: IOrderCardProps) => {
 
       <div className="flex gap-3">
         <p className="text-[13px] font-medium text-[#818181]">
-          {order.user.birthday.split("-").reverse().join(".")}
+          {new Date(order.created_at).toLocaleDateString("ru-RU")}
         </p>
         <p className="text-[13px] font-medium text-[#818181]">
           {order.user.full_name}

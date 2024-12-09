@@ -37,6 +37,8 @@ export type OrderType = {
   payment_id_2: number;
   status: StatusType;
   media: MediaType[];
+  created_at: string;
+  updated_at: string;
   user: {
     id: number;
     full_name: string;

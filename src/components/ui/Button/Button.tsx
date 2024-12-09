@@ -4,11 +4,18 @@ import { twMerge } from "tailwind-merge";
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 
+  disabled?: boolean;
   loading?: boolean;
   className?: string;
 }
 
-const Button = ({ children, className, loading, ...props }: IButtonProps) => {
+const Button = ({
+  disabled,
+  children,
+  className,
+  loading,
+  ...props
+}: IButtonProps) => {
   return (
     <button
       className={twMerge(
@@ -16,7 +23,7 @@ const Button = ({ children, className, loading, ...props }: IButtonProps) => {
         "disabled:bg-[#EDE5CA]",
         className,
       )}
-      disabled={props.disabled || loading}
+      disabled={disabled || loading}
       {...props}
     >
       {loading ? (
